@@ -48,5 +48,6 @@ ssh someinternalhost
    - добавлен: файл setupvpn.sh (для ubuntu 18.04)
    - добавлен: cloud-bastion.ovpn
 >3. Опишите в README.md и получившуюся конфигурацию и данные для подключения в следующем формате (важно для проверки!):
+
 bastion_IP = 84.201.157.40
 someinternalhost_IP = 10.130.0.30

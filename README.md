@@ -51,3 +51,49 @@ ssh someinternalhost
 
 bastion_IP = 84.201.157.40
 someinternalhost_IP = 10.130.0.30
+
+## Домашнее задание к лекции №6
+Что было сделано:
+Создана VM, установлены ruby, mongo и приложение(monolith) с git, проверн запуск.
+
+>впишите данные для подключения в следующем формате (важно для автоматической проверки ДЗ):
+
+testapp_IP = 84.201.174.187
+testapp_port = 9292
+
+### Самостоятельное задание:
+>Команды по настройке системы и деплоя приложения нужно завернуть в баш скрипты, чтобы не вбивать эти команды вручную:
+>Скрипт install_ruby.sh должен содержать команды по установке Ruby;
+Добавлен к репо через git add --chmod=+x: install_ruby.sh
+
+>Скрипт install_mongodb.sh должен содержать команды по установке MongoDB:
+Добавлен к репо через git add --chmod=+x: install_mongodb.sh
+
+>Скрипт deploy.sh должен содержать команды скачивания кода, установки зависимостей через bundler и запуск приложен:
+Добавлен к репо через git add --chmod=+x: deploy.sh
+
+### Дополнительное задание:
+
+изучены:
+- https://cloud.yandex.ru/docs/compute/concepts/vm-metadata
+- https://cloudinit.readthedocs.io/en/latest/topics/format.html
+Сформированы:
+- cloud-config config.yml
+- script.sh - объединение скриптов выше
+- сформирована user-data через команду и скрипт, взятый с cloudinit:
+```
+./make_mime.py -a config.yaml:cloud-config -a script.sh:x-shellscript > user-data
+```
+Пересоздана VM с помощью команды yc ниже с использованием созданной user-data(startup_script)
+(Для себя для памяти: сами скрипты в user-data можно посмотреть через https://www.base64decode.org)
+
+```
+yc compute instance create
+--name reddit-app
+--hostname reddit-app
+--memory=4
+--create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1604-lts,size=10GB
+--network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4
+--metadata serial-port-enable=1
+--metadata-from-file user-data=startup_script
+```

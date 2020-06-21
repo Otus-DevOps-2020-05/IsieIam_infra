@@ -62,14 +62,18 @@ testapp_IP = 130.193.39.133
 testapp_port = 9292
 
 ### Самостоятельное задание:
+
 >Команды по настройке системы и деплоя приложения нужно завернуть в баш скрипты, чтобы не вбивать эти команды вручную:
 >Скрипт install_ruby.sh должен содержать команды по установке Ruby;
+
 Добавлен к репо через git add --chmod=+x: install_ruby.sh
 
 >Скрипт install_mongodb.sh должен содержать команды по установке MongoDB:
+
 Добавлен к репо через git add --chmod=+x: install_mongodb.sh
 
 >Скрипт deploy.sh должен содержать команды скачивания кода, установки зависимостей через bundler и запуск приложен:
+
 Добавлен к репо через git add --chmod=+x: deploy.sh
 
 ### Дополнительное задание:
@@ -77,6 +81,7 @@ testapp_port = 9292
 изучены:
 - https://cloud.yandex.ru/docs/compute/concepts/vm-metadata
 - https://cloudinit.readthedocs.io/en/latest/topics/format.html
+
 Сформированы:
 - cloud-config config.yml
 - script.sh - объединение скриптов выше
@@ -85,6 +90,7 @@ testapp_port = 9292
 ./make_mime.py -a config.yaml:cloud-config -a script.sh:x-shellscript > user-data
 ```
 Пересоздана VM с помощью команды yc ниже с использованием созданной user-data(startup_script)
+
 (Для себя для памяти: сами скрипты в user-data можно посмотреть через https://www.base64decode.org)
 
 ```

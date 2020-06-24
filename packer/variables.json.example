@@ -1,5 +1,5 @@
 {
-    "service_account_key_file": "some-path-to-key",
+    "service_account_key_file": "./files/fantasy_file.txt",
     "folder_id": "some-folder",
     "source_image_family": "some-image",
     "base_image_name": "some-image-name",

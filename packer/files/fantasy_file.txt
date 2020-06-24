@@ -1,1 +1,8 @@
-fantasy
+{
+   "id": "1fgsds",
+   "service_account_id": "2sdfsdfs",
+   "created_at": "2020-06-24T11:40:12Z",
+   "key_algorithm": "RSA_2048",
+   "public_key": "-----BEGIN PUBLIC KEY-----\nggdfgdfgIwIDAQAB\n-----END PUBLIC KEY-----\n",
+   "private_key": "-----BEGIN PRIVATE KEY-----\nSCJMdAzZw==\n-----END PRIVATE KEY-----\n"
+}

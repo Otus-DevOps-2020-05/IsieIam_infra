@@ -1,0 +1,11 @@
+{
+    "service_account_key_file": "files/fantasy_file.txt",
+    "folder_id": "some-folder",
+    "source_image_family": "some-image",
+    "base_image_name": "some-image-name",
+    "ssh_username": "some-user",
+    "platform_id": "some-platform-id",
+    "platform_type": "some-platform-type",
+    "disk_size_gb": "10",
+    "instance_mem_gb" : "2"
+}

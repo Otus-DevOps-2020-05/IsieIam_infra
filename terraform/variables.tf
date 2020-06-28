@@ -25,9 +25,19 @@ variable private_key_path {
 variable image_id {
   description = "Disk image"
 }
+variable image_full_id {
+  description = "Full Disk image"
+}
 variable subnet_id {
   description = "Subnet"
 }
 variable service_account_key_file {
   description = "key .json"
+}
+variable service_account_id {
+  description = "ID"
+}
+variable vm_count {
+  description = "VM count"
+  default     = "1"
 }

@@ -41,3 +41,35 @@ variable vm_count {
   description = "VM count"
   default     = "1"
 }
+variable app_disk_image {
+  description = "Disk image for reddit app"
+  default     = "reddit-app-base"
+}
+variable db_disk_image {
+  description = "Disk image for reddit db"
+  default     = "reddit-db-base"
+}
+variable app_cpu_count {
+  description = "app CPU count"
+}
+variable app_ram_size {
+  description = "app RAM GB"
+}
+variable app_cpu_usage {
+  description = "app cpu % usage"
+}
+variable db_cpu_count {
+  description = "db CPU count"
+}
+variable db_ram_size {
+  description = "db RAM GB"
+}
+variable db_cpu_usage {
+  description = "db cpu % usage"
+}
+variable app_instance_name {
+  description = "app instance and tag name"
+}
+variable db_instance_name {
+  description = "db instance and tag name"
+}

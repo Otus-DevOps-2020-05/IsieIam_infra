@@ -259,7 +259,7 @@ export AWS_SECRET_ACCESS_KEY="t..n"
 
 (Также, простым указанием storage input переменных в описании provider создать backend так и не получлось - он их просто не видит(хотя документация говорит что должно работать)).
 
-Результат: если попробовать выполнить любую команду terraform(apply, plan) после добавления backend, то он просит переинцилизроваться и в случае успеха реинициализации - state файл уже локально не появляется, а хранится и используется в бакете.
+Проверен результат: если попробовать выполнить любую команду terraform(apply, plan) после добавления backend, то он просит переинцилизроваться и в случае успеха реинициализации - state файл уже локально не появляется, а хранится и используется в бакете.
 
 >2. Перенесите конфигурационные файлы Terraform в другую директорию (вне репозитория). Проверьте, что state-файл (terraform.tfstate) отсутствует. Запустите Terraform в обеих директориях и проконтролируйте, что он "видит" текущее состояние независимо от директории, в которой запускается
 
@@ -276,6 +276,14 @@ Error: Error while requesting API to create instance: server-request-id = 679029
 - При удалении:
 
 Error: error reading Subnet "app-subnet": server-request-id = 10b9cc82-e9c4-b5da-9ac1-21df13a44d90 server-trace-id = fac2ba51de23abe4:7919dd1867f2ed61:fac2ba51de23abe4:1 client-request-id = 0e457816-a5a9-4c38-88fc-983d460ef415 client-trace-id = e4f1fd22-8f28-46db-b000-f4db4595cfc6 rpc error: code = FailedPrecondition desc = Invalid subnet state
+
+Чтобы включить систему блокировок aws ресурс требует dynamo-db table:
+https://www.terraform.io/docs/backends/types/s3.html#dynamodb_table
+
+Только у yandex облака по ходу такой фичи нет, по крайней мере нигде в их документации про это не указано:
+https://cloud.yandex.ru/docs/solutions/infrastructure-management/terraform-state-storage
+
+В backend.tf попробовал создать таблицу с dynamodb, но тогда нужен провайдер aws, но общий принцип понятен в принципе и цель тоже.
 
 >4. Добавьте описание в README.md
 
@@ -303,6 +311,8 @@ resource "null_resource" "app" {
 Реализовано через доп переменные и null ресурс:
 - install_app_enable, install_db_enable - входные для основной конфигурации
 - install_enable для модулей - входные параметры для модулей
+
+Проверено - все работает как ожидалось :)
 
 >3. Добавьте описание в README.md
 

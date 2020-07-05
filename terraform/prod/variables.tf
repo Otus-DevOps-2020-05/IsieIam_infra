@@ -37,6 +37,12 @@ variable service_account_key_file {
 variable service_account_id {
   description = "ID"
 }
+variable storage_access_key {
+  description = "storage_access_key"
+}
+variable storage_secret_key {
+  description = "storage_secret_key"
+}
 variable vm_count {
   description = "VM count"
   default     = "1"
@@ -72,4 +78,10 @@ variable app_instance_name {
 }
 variable db_instance_name {
   description = "db instance and tag name"
+}
+variable install_app_enable {
+  description = "app enable install"
+}
+variable install_db_enable {
+  description = "db enable install"
 }

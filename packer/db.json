@@ -1,0 +1,25 @@
+{
+    "builders": [
+        {
+            "type": "yandex",
+            "service_account_key_file": "{{user `service_account_key_file`}}",
+            "folder_id": "{{user `folder_id`}}",
+            "source_image_family": "{{user `source_image_family`}}",
+            "image_name": "{{user `db_image_name`}}-{{timestamp}}",
+            "image_family": "{{user `db_image_name`}}",
+            "ssh_username": "{{user `ssh_username`}}",
+            "platform_id": "{{user `platform_id`}}",
+            "use_ipv4_nat" : "true",
+            "disk_size_gb" : "{{user `disk_size_gb`}}",
+            "instance_mem_gb" : "{{user `instance_mem_gb`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "scripts/install_mongodb.sh",
+            "pause_before": "60s",
+            "execute_command": "sudo {{.Path}}"
+        }
+    ]
+}

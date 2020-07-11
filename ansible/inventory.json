@@ -1,4 +1,7 @@
 {
+    "_meta": {
+      "hostvars": {}
+    },
     "app": {
         "hosts": ["130.193.38.158"],
         "children":[]

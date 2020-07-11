@@ -344,6 +344,7 @@ appserver                  : ok=2    changed=1    unreachable=0    failed=0    s
 ### Задание с *:
 
 >1. Ознакомьтесь с документацией на формат JSON для динамического инвентори
+
 Изучено:
 - https://medium.com/@Nklya/динамическое-инвентори-в-ansible-9ee880d540d6
 - https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory
@@ -351,11 +352,10 @@ appserver                  : ok=2    changed=1    unreachable=0    failed=0    s
 >2. Создайте файл inventory.json в формате, описанном в п.1 для нашей GCP-инфраструктуры и скрипт для работы с ним.
 
 - Создан файл inventory.json в формате из описания: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory
-- А также создан файл get_inventory.sh - который просто по-читерски делает cat inventory.json всегда(т.е. и при входном параметре --list)(ес-но можно запрашивать где угодно инфо и формировать json)
+- А также создан файл get_inventory.sh - который просто по-читерски делает cat inventory.json всегда(т.е. и при входном параметре --list, который требуется по документации)
 - sh файл добавлен в дефолтное инвентори в конфиге ansible.
-(при этом ansible автоматом разбирает в каком формате ему подсунули инвентори и если отдать inventory.json - то он выдает ошибку о нарушении формата, т.к. норпмально умеет парсить только json сконвертированный из yml)
->(увы, реализовать api YC даже для простого получения инфо об инстансах для меня это слишком долго :), к тому же это будет всего одна команда и с учетом наличия https://github.com/rodion-goritskov/yacloud_compute это точно неэффективно).
 
+>(увы, реализовать api YC даже для простого получения инфо об инстансах для меня это слишком долго :), к тому же это будет всего одна команда и с учетом наличия https://github.com/rodion-goritskov/yacloud_compute это точно неэффективно).
 
 >3. Добейтесь успешного выполнения команды ansible all -m ping и опишите шаги в README .
 
@@ -386,17 +386,28 @@ $ ansible --list-hosts all
     130.193.36.65
 ```
 >4. Добавьте параметры в файл ansible.cfg для работы с инвентори в формате JSON.
-Здесь не совсем понятно: каких то специальных параметров нет, кроме как указания откуда брать inventory, а инвентори в формате "json из yml" ansible парсит без каких-либо доп параметров.
+
+Здесь не совсем понятно: каких то специальных параметров нет, кроме как указания откуда брать inventory.
+Ansible сам на ходу может определять какой формат инвентори пришел ему на вход, а yml плагин умеет читать json: https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+
+На практике:
+
+- инвентори в формате "json из yml" ansible парсит без каких-либо доп параметров :) )
+- Если попробовать и попытаться json c динамическим инвентори отдать просто так, то будет ошибка след вида(видно что ошибку выдал yml плагин):
+```
+[WARNING]:  * Failed to parse ansiblee/inventory.json with yaml plugin: Invalid "hosts" entry for "app" group, requires a dictionary, found "<type 'list'>" instead.
+```
 
 >5. Если вы разобрались с отличиями схем JSON для динамического и статического инвентори, также добавьте описание в README документацией на формат JSON для динамического инвентори
 
-Описание формата json для динамического инвентори: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory
-Json для статического получается простым конвертированием yml2json
+- Описание формата json для динамического инвентори: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory
+- Json для статического получается простым конвертированием yml2json
 
-Формат(немного упрощенный) динамического: inventory.json
-Формат статического: yml_inventory.json
+В качестве примера можно посмотреть в файлах:
+ - Формат(немного упрощенный) динамического: inventory.json
+ - Формат статического: yml_inventory.json
 
-При запросе списка хостов оба работают:
+При запросе списка хостов оба работают(ip могут быть не актуальны):
 ```
 $ ansible --list-hosts all
   hosts (2):
@@ -407,5 +418,3 @@ $ ansible --list-hosts all -i ./yml_inventory.json
     dbserver
     appserver
 ```
-Если попробовать на практике, то форматы отличаются следующим:
->[WARNING]:  * Failed to parse ansiblee/inventory.json with yaml plugin: Invalid "hosts" entry for "app" group, requires a dictionary, found "<type 'list'>" instead.

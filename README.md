@@ -355,6 +355,10 @@ appserver                  : ok=2    changed=1    unreachable=0    failed=0    s
 - А также создан файл ansible/get_inventory.sh - который просто делает cat inventory.json всегда(т.е. и при входном параметре --list, который требуется по документации)
 - sh файл добавлен в дефолтное инвентори в конфиге ansible.
 
+```
+inventory = ./get_inventory.sh
+```
+
 >(реализовывать api YC даже для простого получения инфо об инстансах - я буду долго :), к тому же это будет всего одна команда и с учетом наличия https://github.com/rodion-goritskov/yacloud_compute и пр. готовых плагинов - это точно не эффективно).
 
 >3. Добейтесь успешного выполнения команды ansible all -m ping и опишите шаги в README .
@@ -401,7 +405,7 @@ Ansible сам на ходу может определять какой форм
 
 >5. Если вы разобрались с отличиями схем JSON для динамического и статического инвентори, также добавьте описание в README:
 
-- Описание формата json для динамического инвентори: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory
+- Описание формата json для динамического инвентори: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-script-conventions
 - Json для статического получается простым конвертированием yml2json
 
 В качестве примера можно посмотреть в файлах:

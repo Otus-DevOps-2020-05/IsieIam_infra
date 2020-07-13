@@ -216,7 +216,7 @@ App_ip_address = [
 
 Бонусом пошло изучение instance group и под них были созданы lb.tf.old и ig.tf.old
 
-## Домашнее задание к лекции №9
+## Домашнее задание к лекции №10
 
 ### Задание:
 Что было сделано:
@@ -318,3 +318,108 @@ resource "null_resource" "app" {
 >3. Добавьте описание в README.md
 
 Описание добавлено.
+
+## Домашнее задание к лекции №11 (Управление конфигурацией. Знакомство с Ansible )
+
+### Задание:
+Что было сделано:
+ - установлен python,pip и сам ansible через pip.
+ - созданы базовые inventory(ini,yml) и проверено выполнение различных команд через модули ansible (ping, command, shell и пр.).
+ - проверена на практике работа с модулем ansible git
+ - проверена работа с группами хостов.
+ - проверен в работе ansible-playbook clone.
+
+По поводу вопроса с rm -rf: волшебство в том, что на хосте уже есть каталог reddit и при первом выполнении команда выполнилась, но ничего не изменилось:  changed = 0:
+```
+PLAY RECAP *********************************************************************************************
+appserver                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+Далее мы удаляем каталог через rm -rf и выполняем плейбук еще раз, а т.к. каталога нет, то он создается и данные клонируются(т.е. изменения по факту произошли), соответственно видим, что changed = 1:
+```
+PLAY RECAP *********************************************************************************************
+appserver                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+### Задание с *:
+
+>1. Ознакомьтесь с документацией на формат JSON для динамического инвентори
+
+Изучено:
+- https://medium.com/@Nklya/динамическое-инвентори-в-ansible-9ee880d540d6
+- https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#developing-inventory
+
+>2. Создайте файл inventory.json в формате, описанном в п.1 для нашей GCP-инфраструктуры и скрипт для работы с ним.
+
+- Создан файл ansible/inventory.json в формате из описания: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-script-conventions
+- А также создан файл ansible/get_inventory.sh - который просто делает cat inventory.json всегда(т.е. и при входном параметре --list, который требуется по документации)
+- sh файл добавлен в дефолтное инвентори в конфиге ansible.
+
+```
+inventory = ./get_inventory.sh
+```
+
+>(реализовывать api YC даже для простого получения инфо об инстансах - я буду долго :), к тому же это будет всего одна команда и с учетом наличия https://github.com/rodion-goritskov/yacloud_compute и пр. готовых плагинов - это точно не эффективно).
+
+>3. Добейтесь успешного выполнения команды ansible all -m ping и опишите шаги в README .
+
+С подготовленными файлами выше, работает:
+```
+пинг хостов через скрипт:
+$ ansible all -m ping
+130.193.36.65 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+130.193.36.248 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+
+----------------
+список хостов через скрипт:
+$ ansible --list-hosts all
+  hosts (2):
+    130.193.36.248
+    130.193.36.65
+```
+>4. Добавьте параметры в файл ansible.cfg для работы с инвентори в формате JSON.
+
+Здесь не совсем понятно: каких-то специальных параметров нет, кроме как указания откуда брать inventory.
+Ansible сам на ходу может определять какой формат инвентори пришел ему на вход(используются дефолтные значения из настройки: https://docs.ansible.com/ansible/latest/reference_appendices/config.html#inventory-enabled),
+а yml плагин умеет читать json: https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+
+На практике:
+
+- инвентори в формате "json из yml" ansible парсит без каких-либо доп параметров :) )
+- Если попробовать и попытаться json c динамическим инвентори отдать просто так, то будет ошибка след вида(видно что ошибку выдал yml плагин):
+```
+[WARNING]:  * Failed to parse ansiblee/inventory.json with yaml plugin: Invalid "hosts" entry for "app" group, requires a dictionary, found "<type 'list'>" instead.
+```
+
+>5. Если вы разобрались с отличиями схем JSON для динамического и статического инвентори, также добавьте описание в README:
+
+- Описание формата json для динамического инвентори: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html#inventory-script-conventions
+- Json для статического получается простым конвертированием yml2json
+
+В качестве примера можно посмотреть в файлах:
+ - Формат(немного упрощенный) динамического: inventory.json
+ - Формат статического: yml_inventory.json
+
+При запросе списка хостов оба работают(ip могут быть не актуальны):
+```
+$ ansible --list-hosts all
+  hosts (2):
+    130.193.36.248
+    130.193.36.65
+$ ansible --list-hosts all -i ./yml_inventory.json
+  hosts (2):
+    dbserver
+    appserver
+```

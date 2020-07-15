@@ -16,7 +16,6 @@
       bundler:
         state: present
         chdir: /home/ubuntu/reddit
-
   handlers:
   - name: restart puma
     become: true

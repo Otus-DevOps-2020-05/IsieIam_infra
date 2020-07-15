@@ -68,7 +68,7 @@
         state: present
         chdir: /home/ubuntu/reddit
 
-  handlers:# описание перезапуска puma
+  handlers: # описание перезапуска puma
   - name: restart puma
     become: true
     systemd: name=puma state=restarted

@@ -483,6 +483,11 @@ packer build -var-file packer/variables.json packer/db.json
 >Исследуйте возможности использования dynamic inventory для GCP (для этого есть не только gce.py ).
 
  - С gcp как-то не очень, т.к. вся практика была на yandex cloud, поэтому поискал варианты для YC, но ничего не понравилось :), поэтому:
+```
+особой разницы правда не будет, если посмотреть ссылку: https://devopscube.com/ansible-dymanic-inventry-google-cloud/
+то видно что все волшебство будет в том, что gce выдаст в hostvars все возможные переменные взятые с инстансов GC
+и соответственно их можно использоваться в плейбуках.
+```
  - в дополнение к пред дз - реализовано более честное dynamic inventory с ya cloud - get_inventory.py:
 ```
 - создается токен для yandex api

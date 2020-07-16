@@ -449,7 +449,7 @@ ansible-playbook reddit_app.yml --limit app --tags deploy-tag
  - Написаны: ansible/packer_app.yml и ansible/packer_db.yml
  - исправлены packer/app.json и packer/db.json
  - проверена работоспособность, все работает, но с доработками :)
- - Подправлены provosioner в packer, команда для запуска packer(чтобы не искать):
+ - Подправлены provisioner в packer, команда для запуска packer(чтобы не искать):
 ```
 packer build -var-file packer/variables.json packer/app.json
 packer build -var-file packer/variables.json packer/db.json
@@ -480,4 +480,19 @@ packer build -var-file packer/variables.json packer/db.json
 
 ### Задание с *:
 
-todo
+>Исследуйте возможности использования dynamic inventory для GCP (для этого есть не только gce.py ).
+
+ - С gcp как-то не очень, т.к. вся практика была на yandex cloud, поэтому поискал варианты для YC, но ничего не понравилось :), поэтому:
+ - в дополнение к пред дз - реализовано более честное dynamic inventory с ya cloud - get_inventory.py:
+```
+- создается токен для yandex api
+- выбирается id облака из уз (пока ограничение что облако у уз одно)
+- далее по имени каталога получается его id
+- и собирается inventory
+- для текущего задания добавляются в inventory доп переменные: internal_ip
+- увы, много хардкода, но все-таки цель была не написать полноценной скрипт для inventory под YC :)
+```
+ - изменены playbook только для 3 случая: когда все playbook разделены(убраны переменные в playbook).
+ - в template добавлено использование переменных из inventory hostvars (пока считаем что у нас БД одна и больше хостов быть не может :))
+
+В качестве результата после запуска terraform apply, достаточно запустить ansible-playbook site.yml, ничего редактировать в переменных не надо и все запустится.

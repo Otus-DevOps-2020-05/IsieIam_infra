@@ -2,8 +2,8 @@
 - name: Configure App
   hosts: app
   become: true
-  vars:
-   db_host: 192.168.10.3
+#  vars:
+#   db_host: 192.168.10.6
   tasks:
     - name: Add unit file for Puma
       copy:

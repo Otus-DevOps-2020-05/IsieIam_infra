@@ -13,4 +13,4 @@ systemLog:
 # network interfaces
 net:
   port: {{ mongo_port | default('27017') }}
-  bindIp: {{ mongo_bind_ip }}
+  bindIp: {{ hostvars[ansible_host]['internal_ip'] }}

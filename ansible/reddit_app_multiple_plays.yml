@@ -1,0 +1,74 @@
+---
+- name: Configure MongoDB # настройка сервера БД
+  hosts: db
+  tags: db-tag
+  become: true
+  vars:  # bind ip переменная, 0.0.0.0 монго уже просто так не дает поставить в целях ИБ
+    mongo_bind_ip: 192.168.10.35
+  tasks: # Заменяем конфиг монго
+    - name: Change mongo config file
+      template:
+        src: templates/mongod.conf.j2
+        dest: /etc/mongod.conf
+        mode: 0644
+      notify: restart mongod # говорим что после замены нужно выполнить рестарт, описанный ниже
+
+  handlers: # описание процедуры перезапуская монго
+  - name: restart mongod
+    service: name=mongod state=restarted
+
+
+- name: Configure App # настройка сервера приложения
+  hosts: app
+  tags: app-tag
+  become: true
+  vars:
+   db_host: 192.168.10.35 # ip сервера БД
+  tasks:
+    # добавляем сервис для puma
+    - name: Add unit file for Puma
+      copy:
+        src: files/puma.service
+        dest: /etc/systemd/system/puma.service
+      notify: restart puma
+    # закидываем файл с переменной окружения для подключения к БД - его использует сервис пумы - см файл сервиса
+    - name: Add config for DB connection
+      template:
+        src: templates/db_config.j2
+        dest: /home/ubuntu/db_config
+        owner: ubuntu
+        group: ubuntu
+    # включаем сервис
+    - name: enable puma
+      systemd: name=puma enabled=yes
+
+  handlers: # настройка перезапуска пумы
+  - name: restart puma
+    systemd: name=puma state=restarted
+
+
+- name: Deploy App # деплоим приложение и не только его
+  hosts: app
+  tags: deploy-tag
+  tasks:
+    - name: Install git # ставим git, ибо его забыли
+      apt:
+        name: git
+      become: yes
+    # сливаем с гит репа наше приложение
+    - name: Fetch the latest version of application code
+      git:
+        repo: 'https://github.com/express42/reddit.git'
+        dest: /home/ubuntu/reddit
+        version: monolith
+      notify: restart puma
+    # магия с bundle
+    - name: bundle install
+      bundler:
+        state: present
+        chdir: /home/ubuntu/reddit
+
+  handlers: # описание перезапуска puma
+  - name: restart puma
+    become: true
+    systemd: name=puma state=restarted

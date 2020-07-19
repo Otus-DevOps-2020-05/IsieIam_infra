@@ -1,0 +1,14 @@
+---
+- name: Configure App
+  hosts: app
+  become: true
+#  vars:
+#   db_host: 192.168.10.6
+  roles:
+    - role: app
+    - role: jdauphant.nginx
+      nginx_sites:
+        default:
+          - listen {{ nginx_server_port }}
+          - server_name {{ nginx_server_name }}
+          - location / { proxy_pass {{ nginx_location_address }};}

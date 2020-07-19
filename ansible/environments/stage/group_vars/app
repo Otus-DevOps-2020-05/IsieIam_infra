@@ -1,0 +1,4 @@
+db_host: 192.168.10.22
+nginx_server_name : "reddit"
+nginx_server_port : 80
+nginx_location_address: "http://127.0.0.1:9292"

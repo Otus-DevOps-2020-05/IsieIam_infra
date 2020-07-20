@@ -1,4 +1,9 @@
-db_host: 192.168.10.22
-nginx_server_name : "reddit"
-nginx_server_port : 80
-nginx_location_address: "http://127.0.0.1:9292"
+db_host: "{{ hostvars[groups['db'][0]]['internal_ip'] }}"
+
+nginx_sites:
+  default:
+  - listen 80
+  - server_name "reddit"
+  - location / {
+      proxy_pass http://localhost:9292;
+    }

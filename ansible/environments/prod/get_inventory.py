@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 # env variable
-env_template = "stage"
+env_template = "prod"
 folder_template = "infra"
 
 # Get token - yc iam create-token

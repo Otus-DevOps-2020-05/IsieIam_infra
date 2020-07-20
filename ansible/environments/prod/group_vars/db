@@ -1,1 +1,1 @@
-mongo_bind_ip: 0.0.0.0
+mongo_bind_ip: "{{ hostvars[ansible_host]['internal_ip'] }}"

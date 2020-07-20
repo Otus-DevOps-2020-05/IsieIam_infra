@@ -6,7 +6,7 @@ terraform {
   backend "s3" {
     endpoint                    = "storage.yandexcloud.net"
     bucket                      = "isie-ter-bucket"
-    key                         = "reddit/reddit-prod.tfstate"
+    key                         = "reddit/reddit-stage.tfstate"
     region                      = "us-east-1"
     skip_region_validation      = true
     skip_credentials_validation = true

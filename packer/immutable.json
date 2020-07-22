@@ -17,28 +17,28 @@
     "provisioners": [
         {
             "type": "shell",
-            "script": "scripts/install_ruby.sh",
+            "script": "packer/scripts/install_ruby.sh",
             "pause_before": "30s",
             "execute_command": "sudo {{.Path}}"
         },
         {
             "type": "shell",
-            "script": "scripts/install_mongodb.sh",
+            "script": "packer/scripts/install_mongodb.sh",
             "execute_command": "sudo {{.Path}}"
         },
         {
             "type": "file",
-            "source": "files/myunit.service",
+            "source": "packer/files/myunit.service",
             "destination": "/home/ubuntu/"
         },
         {
             "type": "shell",
-            "script": "files/deploy.sh",
+            "script": "packer/files/deploy.sh",
             "execute_command": "sudo {{.Path}}"
         },
         {
             "type": "shell",
-            "script": "files/enable_service.sh",
+            "script": "packer/files/enable_service.sh",
             "execute_command": "sudo {{.Path}}"
         }
     ]

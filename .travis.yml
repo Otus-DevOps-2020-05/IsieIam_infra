@@ -1,14 +1,10 @@
 dist: trusty
 sudo: required
-jobs:
-  include:
-    - stage: "Otus tests"
-      language: bash
-      before_install:
-        - curl https://raw.githubusercontent.com/express42/otus-homeworks/2020-05/run.sh |  bash
-    - stage: "Tests"
-      #if: (branch = master AND type = push) OR type = pull_request
-      script: ./tests/run.sh
+language: bash
+before_install:
+  - curl https://raw.githubusercontent.com/express42/otus-homeworks/2020-05/run.sh | bash
+  - ls
+  - ./test/run.sh
 
 notifications:
   slack:

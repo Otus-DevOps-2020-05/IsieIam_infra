@@ -552,6 +552,7 @@ ansible-inventory --list
 
 Сделано: tests/packer_test.sh
 > terraform validate и tflint для окружений stage и prod
+
 Сделано: tests/terraform_test.sh
 > ansible-lint для плейбуков Ansible
 

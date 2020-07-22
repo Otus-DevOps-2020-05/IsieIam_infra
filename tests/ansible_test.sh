@@ -2,4 +2,8 @@
 
 echo " == Begin ansible validate:"
 cd /srv/ansible/playbooks
-ansible-lint --exclude=roles/jdauphant.nginx
+#cd ../ansible/playbooks
+for f in ./*.yml; do
+    echo " === Begin ansible validate: $f"
+    ansible-lint $f --exclude=roles/jdauphant.nginx
+done

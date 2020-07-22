@@ -2,4 +2,4 @@
 
 echo " == Begin ansible validate:"
 cd /srv/ansible/playbooks
-ansible-lint
+ansible-lint --exclude=roles/jdauphant.nginx

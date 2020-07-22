@@ -3,8 +3,7 @@ sudo: required
 language: bash
 before_install:
   - curl https://raw.githubusercontent.com/express42/otus-homeworks/2020-05/run.sh | bash
-  - ls
-  - ./test/run.sh
+  - ./tests/run.sh
 
 notifications:
   slack:

@@ -2,8 +2,12 @@ dist: trusty
 sudo: required
 language: bash
 before_install:
-- curl https://raw.githubusercontent.com/express42/otus-homeworks/2020-05/run.sh |
-  bash
+  - curl https://raw.githubusercontent.com/express42/otus-homeworks/2020-05/run.sh | bash
+  # run terraform, tflint, ansible-lint, packer validate
+  # tests use the same docker container as the first task for using the same infra
+  #- ./tests/run.sh
+  - if [[ ( $TRAVIS_BRANCH == "master" && $TRAVIS_EVENT_TYPE == "push" ) || $TRAVIS_EVENT_TYPE == "pull_request" ]]; then ./tests/run.sh; else echo 'skipping test'; fi
+
 notifications:
   slack:
     rooms:

@@ -12,8 +12,8 @@ module "app" {
   public_key_path  = var.public_key_path
   private_key_path = var.private_key_path
   app_disk_image   = var.app_disk_image
-  #subnet_id        = var.subnet_id
-  subnet_id      = module.vpc.subnet_id
+  subnet_id        = var.subnet_id
+  #subnet_id      = module.vpc.subnet_id
   cpu_count      = var.app_cpu_count
   ram_size       = var.app_ram_size
   cpu_usage      = var.app_cpu_usage
@@ -27,14 +27,14 @@ module "db" {
   public_key_path  = var.public_key_path
   private_key_path = var.private_key_path
   db_disk_image    = var.db_disk_image
-  #subnet_id       = var.subnet_id
-  subnet_id      = module.vpc.subnet_id
+  subnet_id       = var.subnet_id
+  #subnet_id      = module.vpc.subnet_id
   cpu_count      = var.db_cpu_count
   ram_size       = var.db_ram_size
   cpu_usage      = var.db_cpu_usage
   instance_name  = var.db_instance_name
   install_enable = var.install_db_enable
 }
-module "vpc" {
-  source = "../modules/vpc"
-}
+#module "vpc" {
+#  source = "../modules/vpc"
+#}

@@ -3,3 +3,4 @@
 
 - src: https://github.com/IsieIam/ansible_role_mongo.git
   version: master
+  name: ansible_role_mongo

@@ -14,3 +14,4 @@ vault.key
 .molecule
 .cache
 .pytest_cache
+ansible/roles/ansible_role_mongo

@@ -4,7 +4,7 @@ IsieIam Infra repository
 [![Build Status](https://travis-ci.com/Otus-DevOps-2020-05/IsieIam_infra.svg?branch=master)](https://travis-ci.com/Otus-DevOps-2020-05/IsieIam_infra)
 
 <details>
-<summary> ##Домашнее задание к лекции №5
+<summary>Домашнее задание к лекции №5 (Знакомство с облачной инфраструктурой и облачными сервисами)
 </summary>
 
 ### Самостоятельное задание №1:
@@ -59,7 +59,7 @@ someinternalhost_IP = 10.130.0.30
 </details>
 
 <details>
-<summary> Домашнее задание к лекции №6
+<summary> Домашнее задание к лекции №6 (Основные сервисы Yandex Cloud)
 </summary>
 
 Что было сделано:
@@ -115,7 +115,7 @@ yc compute instance create
 </details>
 
 <details>
-<summary>Домашнее задание к лекции №7
+<summary>Домашнее задание к лекции №7 (Модели управления инфраструктурой. Подготовка образов с помощью Packer)
 </summary>
 
 ### Задание:
@@ -154,7 +154,7 @@ yc compute instance create
 </details>
 
 <details>
-<summary>Домашнее задание к лекции №8
+<summary>Домашнее задание к лекции №8 (Знакомство с Terraform)
 </summary>
 
 ### Задание:
@@ -235,7 +235,7 @@ App_ip_address = [
 </details>
 
 <details>
-<summary>Домашнее задание к лекции №10
+<summary>Домашнее задание к лекции №10 (Принципы организации инфраструктурного кода и работа над инфраструктурой в команде на примере Terraform)
 </summary>
 
 ### Задание:
@@ -649,5 +649,9 @@ molecule destroy            # dell host
 >Напишите тест к роли db для проверки того, что БД слушает по нужному порту (27017). Используйте для этого один из модулей Testinfra
 
 Добавлен тест наличия listening нужного порта mongo
+
+>Используйте роли db и app в плейбуках packer_db.yml и packer_app.yml и убедитесь, что все работает как прежде (используйте теги для запуска только нужных тасков, теги указываются в шаблоне пакера*).
+
+Настроено(добавлены параметры по тегам, добавлен ansible_env_vars), работает.
 
 ### Задание с *:

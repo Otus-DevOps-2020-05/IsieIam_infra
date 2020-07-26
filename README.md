@@ -655,3 +655,15 @@ molecule destroy            # dell host
 Настроено(добавлены параметры по тегам, добавлен ansible_env_vars), работает.
 
 ### Задание с *:
+
+>Вынести роль db в отдельный репозиторий: удалить роль из репозитория infra и сделать подключение роли через requirements.yml обоих окружений; Не забывать устанавливать роли...:
+
+- Сделано: https://github.com/IsieIam/ansible_role_mongo
+- В requirements.yml добавлена ссылка на репозиторий
+- В playbook db.yml указано роль по имени из requirements.yml
+- В packer/db.json добавлены доп параметры для автоматической установки внешних ролей(galaxy_file - что ставить, roles_path - куда ставить - не ENV)
+- Для памяти - ручная установка внешних ролей:
+```
+ansible-galaxy install -r environments/stage/requirements.yml
+```
+-

@@ -3,7 +3,9 @@ IsieIam Infra repository
 
 [![Build Status](https://travis-ci.com/Otus-DevOps-2020-05/IsieIam_infra.svg?branch=master)](https://travis-ci.com/Otus-DevOps-2020-05/IsieIam_infra)
 
-## Домашнее задание к лекции №5
+<details>
+<summary>Домашнее задание к лекции №5
+</summary>
 
 ### Самостоятельное задание №1:
 >Исследовать способ подключения к someinternalhost в одну команду из вашего рабочего устройства, проверить работоспособность найденного решения и внести его в README.md в вашем репозитории
@@ -54,7 +56,11 @@ ssh someinternalhost
 bastion_IP = 84.201.157.40
 someinternalhost_IP = 10.130.0.30
 
-## Домашнее задание к лекции №6
+</details>
+
+<details>
+<summary> Домашнее задание к лекции №6
+
 Что было сделано:
 Создана VM, установлены ruby, mongo и приложение(monolith) с git, проверн запуск.
 
@@ -105,8 +111,11 @@ yc compute instance create
 --metadata serial-port-enable=1
 --metadata-from-file user-data=startup_script
 ```
+</details>
 
-## Домашнее задание к лекции №7
+<details>
+<summary>Домашнее задание к лекции №7
+</summary>
 
 ### Задание:
 Что было сделано:
@@ -141,7 +150,10 @@ yc compute instance create
 Создан скрипт config-scripts/create-reddit-vm.sh который создает vm, в качестве boot диска которой используется immutable образ(через семейство образов).
 В результате командой создается VM и сразу же имеем уже запущенный monolith.
 
-## Домашнее задание к лекции №8
+</details>
+
+<details>
+<summary>Домашнее задание к лекции №8
 
 ### Задание:
 Что было сделано:
@@ -218,7 +230,11 @@ App_ip_address = [
 
 Бонусом пошло изучение instance group и под них были созданы lb.tf.old и ig.tf.old
 
-## Домашнее задание к лекции №10
+</details>
+
+<details>
+<summary>Домашнее задание к лекции №10
+</summary>
 
 ### Задание:
 Что было сделано:
@@ -321,7 +337,11 @@ resource "null_resource" "app" {
 
 Описание добавлено.
 
-## Домашнее задание к лекции №11 (Управление конфигурацией. Знакомство с Ansible )
+</details>
+
+<details>
+<summary>Домашнее задание к лекции №11 (Управление конфигурацией. Знакомство с Ansible )
+</summary>
 
 ### Задание:
 Что было сделано:
@@ -426,7 +446,11 @@ $ ansible --list-hosts all -i ./yml_inventory.json
     appserver
 ```
 
-## Домашнее задание к лекции №12 (Продолжение знакомства с Ansible: templates, handlers, dynamic inventory, vault, tags)
+</details>
+
+<details>
+<summary>Домашнее задание к лекции №12 (Продолжение знакомства с Ansible: templates, handlers, dynamic inventory, vault, tags)
+</summary>
 
 ### Задание:
 Что было сделано:
@@ -504,7 +528,11 @@ packer build -var-file packer/variables.json packer/db.json
 
 В качестве результата после запуска terraform apply, достаточно запустить ansible-playbook site.yml, ничего редактировать в переменных не надо и все запустится.
 
-## Домашнее задание к лекции №13 (Ansible роли, управление настройками нескольких окружений и best practices)
+</details>
+
+<details>
+<summary>Домашнее задание к лекции №13 (Ansible роли, управление настройками нескольких окружений и best practices)
+</summary>
 
 ### Задание:
 Что было сделано:
@@ -565,7 +593,11 @@ ansible-inventory --list
 
 Сделано.
 
-## Домашнее задание к лекции №14 (Локальная разработка Ansible ролей с Vagrant. Тестирование конфигурации)
+</details>
+
+<details>
+<summary>Домашнее задание к лекции №14 (Локальная разработка Ansible ролей с Vagrant. Тестирование конфигурации)
+</summary>
 
 ### Задание:
 
@@ -577,6 +609,16 @@ ansible-inventory --list
  - Доработаны роли, настроен provisioning под vagrant, проверена установка.
  - Добавлена роль base.yml с установкой python.
  - Добален параметром deploy_user - пользователь, из под которого происходит установка.
+ - Полезные команды:
+```
+cd ansible                  # каталог в котором надо запускать
+vagrant up                  # создать все что есть в файле vagrantfile
+vagrant box list            # список скачанных образов
+vagrant status              # статус vm
+vagrant ssh appserver       # !!! подключение к хосту !!!
+vagrant provision appserver # запуск provosioners - на запущенных машинках :)
+vagrant destroy -f          # dell all from vagrantfile
+```
 
 ### Задание с *:
 >Дополните конфигурацию Vagrant для корректной работы проксирования приложения с помощью nginx
@@ -589,6 +631,16 @@ ansible-inventory --list
  - Создание сценария несколько устарело(параметра  --scenario-name больше у molecule нет):
 ```
 molecule init scenario -r db -d vagrant default
+```
+ - Полезные команды:
+```
+cd ansible/roles/db         # каталог в котором надо запускать
+molecule create             # создать хост
+molecule list               # посмотреть список инстансов
+molecule login -h instance  # подключиться к хосту
+molecule converge           # применять роль к хосту из файла converge.yml
+molecule verify             # запуск тестов
+molecule destroy            # dell host
 ```
 
 ### Самостоятельное задание:

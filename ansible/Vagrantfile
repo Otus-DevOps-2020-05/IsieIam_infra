@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
       "app:vars" => { "db_host" => db_server_ip}
       }
       ansible.extra_vars = {
-        "deploy_user" => "ubuntu",
+        "deploy_user" => "vagrant",
         "nginx_sites" => {
           "default" => [
             "listen 80",

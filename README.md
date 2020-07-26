@@ -4,7 +4,7 @@ IsieIam Infra repository
 [![Build Status](https://travis-ci.com/Otus-DevOps-2020-05/IsieIam_infra.svg?branch=master)](https://travis-ci.com/Otus-DevOps-2020-05/IsieIam_infra)
 
 <details>
-<summary>Домашнее задание к лекции №5
+<summary> ##Домашнее задание к лекции №5
 </summary>
 
 ### Самостоятельное задание №1:
@@ -60,6 +60,7 @@ someinternalhost_IP = 10.130.0.30
 
 <details>
 <summary> Домашнее задание к лекции №6
+</summary>
 
 Что было сделано:
 Создана VM, установлены ruby, mongo и приложение(monolith) с git, проверн запуск.
@@ -154,6 +155,7 @@ yc compute instance create
 
 <details>
 <summary>Домашнее задание к лекции №8
+</summary>
 
 ### Задание:
 Что было сделано:

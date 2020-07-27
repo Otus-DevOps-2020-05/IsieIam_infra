@@ -606,11 +606,11 @@ ansible-inventory --list
 Что было сделано:
 
 ### Vagrant:
- - Установлен Vagran, VirtualBox уже стоял(все дз делались из под ubuntu в virtualbox, а заюзать vbox внутри vbox - нужны nestet pages - а эта фича кое как пока работает в vbox6.1, когда-нибудь проверить), а vagrant под win - это боль.
+ - Установлен Vagrant, VirtualBox уже стоял(vagrant и пр под win - это боль)(т.к. до этого все дз делались в ubuntu в virtualbox, а заюзать vbox внутри vbox просто так нельзя - нужны nested pages + vt-x- а эта фича кое-как пока работает в vbox6.1, когда-нибудь проверить).
  - Создан Vagrantfile, протестировано создание vm.
  - Доработаны роли, настроен provisioning под vagrant, проверена установка.
  - Добавлена роль base.yml с установкой python.
- - Добален параметром deploy_user - пользователь, из под которого происходит установка.
+ - Добален параметром deploy_user - пользователь, из под которого происходит установка. Проверена работоспособность.
  - Полезные команды:
 ```
 cd ansible                  # каталог в котором надо запускать
@@ -625,7 +625,7 @@ vagrant destroy -f          # dell all from vagrantfile
 ### Задание с *:
 >Дополните конфигурацию Vagrant для корректной работы проксирования приложения с помощью nginx
 
-В Vagrantfile в блок ansible.extra_vars добавлен параметр под nginx.
+В Vagrantfile в блок ansible.extra_vars добавлен параметр для nginx. Проверена работоспособность.
 
 ### Molecule:
  - Установлен и добавлены в requirements.txt:  Molecule, Ansible, Testinfra, python-vagrant, а также molecule-vagrant - без него molecule c vagrant не дружит (virtualenv пользовать не стал, т.к. намучавшись с win проще оказалось установить доп ОС в лице ubuntu)
@@ -661,9 +661,12 @@ molecule destroy            # dell host
 - Сделано: https://github.com/IsieIam/ansible_role_mongo
 - В requirements.yml добавлена ссылка на репозиторий
 - В playbook db.yml указано роль по имени из requirements.yml
-- В packer/db.json добавлены доп параметры для автоматической установки внешних ролей(galaxy_file - что ставить, roles_path - куда ставить - не ENV)
+- В packer/db.json добавлены доп параметры для автоматической установки внешних ролей(galaxy_file - что ставить(!!!ведет на stage req), roles_path - куда ставить - не ENV)
 - Для памяти - ручная установка внешних ролей:
 ```
 ansible-galaxy install -r environments/stage/requirements.yml
 ```
--
+
+>Подключить TravisCI для созданного репозитория с ролью db для автоматического прогона тестов в GCE (нужно использовать соответсвующий драйвер в molecule).
+
+>Настроить оповещения о билде в слак чат, который использовали в предыдущих ДЗ;

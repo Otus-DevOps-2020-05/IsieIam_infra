@@ -7,3 +7,11 @@
 *.retry
 jdauphant.nginx
 vault.key
+# Vagrant & molecule
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.pytest_cache
+ansible/roles/ansible_role_mongo

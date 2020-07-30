@@ -5,4 +5,4 @@
 #  vars:
 #    mongo_bind_ip: 192.168.10.6
   roles:
-    - db
+    - ansible_role_mongo

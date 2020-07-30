@@ -1,17 +1,6 @@
 ---
-- name: Install Ruby
+- name: Install Ruby and Puma
   hosts: all
   become: true
-  tasks:
-  # обходим проблему блокировки dpkg
-  - name: Wait for /var/lib/dpkg/lock-frontend to be released
-    shell: while lsof /var/lib/dpkg/lock-frontend ; do sleep 10; done;
-    tags: skip_ansible_lint
-  - name: Run the equivalent of "apt-get update" as a separate step
-    apt:
-      update_cache: yes
-  # непосредственно установка
-  - name: Install ruby with addons
-    apt:
-      name: ['ruby-full', 'ruby-bundler', 'build-essential']
-      state: present
+  roles:
+    - app
